@@ -65,9 +65,9 @@ coverage.xml
 
 ### Django ###
 *.log
-*.pot
 *.pyc
-__pycache__/
+
+# local settings for Django
 local_settings.py
 
 .env
