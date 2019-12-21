@@ -20,10 +20,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '_)08a2voe_ic$vp9_wrq_v1fdeyvnu_6gqc-(pdk5rg51o+$mj'
+try:
+    from study_guide import local_settings as settings
+    KEY_VALUE = settings.SECRET_KEY
+except ImportError:
+    KEY_VALUE = os.getenv('DJANGO_SECRET_KEY')
+
+SECRET_KEY = KEY_VALUE
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = settings.DEBUG
 
 ALLOWED_HOSTS = []
 
@@ -37,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sg_backend',
 ]
 
 MIDDLEWARE = [
@@ -75,8 +82,12 @@ WSGI_APPLICATION = 'study_guide.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': settings.LOCAL_DATABASES['ENGINE'],
+        'NAME': settings.LOCAL_DATABASES['NAME'],
+        'USER': settings.LOCAL_DATABASES['USER'],
+        'PASSWORD': settings.LOCAL_DATABASES['PASSWORD'],
+        'HOST': settings.LOCAL_DATABASES['HOST'],
+        'PORT': settings.LOCAL_DATABASES['PORT']
     }
 }
 
