@@ -5,9 +5,12 @@ from . import views
 
 
 urlpatterns = [
-    path('categories/', views.CategoriesListView.as_view()),
-    path('users/', views.UsersListView.as_view()),
-    path('users/<int:pk>/', views.UserDetailListView.as_view())
+    path('categories/', views.AllCategoriesListView.as_view()),
+    path('users/', views.AllUsersListView.as_view()),
+    path('user/<int:pk>/', views.UserDetailsView.as_view()),
+    path('user/<int:pk>/all/', views.UserDetailWithAllDataView.as_view()),
+    path('user/<int:pk>/categories/', views.UserDetailsCategoriesView.as_view()),
+    # path('user/<int:pk>/categories/<int:cid>/', views.CategoryDetailsWithTopicsView.as_view())
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

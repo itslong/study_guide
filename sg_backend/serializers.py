@@ -4,23 +4,56 @@ from django.contrib.auth.models import User
 from .models import Categories, Topics, Notes
 
 
-class BaseCategoriesSerializer(serializers.ModelSerializer):
+class CategoriesListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Categories
-        fields = '__all__'
+        exclude = ['user', ]
 
 
-class CategoriesWithUsersListSerializer(serializers.ModelSerializer):
+class NotesListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notes
+        exclude = ['topic', ]
+
+
+# class TopicsListSerializer(serializers.ModelSerializer):
+#
+#     class Meta:
+#         model = Topics
+#         exclude = ['category', ]
+#
+#
+# class CategoryDetailsWithTopicsSerializer(serializers.ModelSerializer):
+#       """
+#       A Category's detail with related topics at depth 1.
+#       """
+#     topics = TopicsListSerializer(source='topics_set', many=True)
+#
+#     class Meta:
+#         model = Categories
+#         exclude = ['user']
+
+
+class TopicsWithNotesSerializer(serializers.ModelSerializer):
     """
-    Displays the Username, email and Id for each Category.
+    Gets the related notes to this topic.
     """
-    username = serializers.ReadOnlyField(source='user.username')
-    email = serializers.ReadOnlyField(source='user.email')
-    user_id = serializers.ReadOnlyField(source='user.id')
+    notes = NotesListSerializer(source='notes_set', many=True)
+
+    class Meta:
+        model = Topics
+        fields = ['id', 'topic_name', 'notes']
+
+
+class CategoryWithTopicsSerializer(serializers.ModelSerializer):
+    """
+    Gets the related topics to this category.
+    """
+    topics = TopicsWithNotesSerializer(source='topics_set', many=True)
 
     class Meta:
         model = Categories
-        fields = ['id', 'category_name', 'category_desc', 'user_id', 'username', 'email']
+        fields = ['id', 'category_name', 'category_desc', 'topics']
 
 
 class UsersListSerializer(serializers.ModelSerializer):
@@ -34,11 +67,31 @@ class UsersListSerializer(serializers.ModelSerializer):
 
 class UserDetailSerializer(serializers.ModelSerializer):
     """
-    Display a single user's categories
+    Displays non-sensitive fields about a User.
     """
-    categories = BaseCategoriesSerializer(source='categories_set', many=True, read_only=True)
 
     class Meta:
-        depth = 1
+        model = User
+        exclude = ['password', 'is_superuser', 'is_staff', 'is_active', 'user_permissions']
+
+
+class UserDetailWithAllData(serializers.ModelSerializer):
+    """
+    Get all nested items from a User's Categories -> Topics -> Notes.
+    """
+    categories = CategoryWithTopicsSerializer(source='categories_set', many=True)
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'categories']
+
+
+class UserCategoryDetails(serializers.ModelSerializer):
+    """
+    Get all categories (only) that belong to a User.
+    """
+    categories = CategoriesListSerializer(source='categories_set', many=True)
+
+    class Meta:
         model = User
         fields = ['id', 'username', 'email', 'categories']

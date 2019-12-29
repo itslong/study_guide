@@ -2,20 +2,30 @@ from rest_framework import generics
 from django.contrib.auth.models import User
 
 from sg_backend.models import Categories
-from sg_backend.serializers import CategoriesWithUsersListSerializer, UsersListSerializer, UserDetailSerializer
+from sg_backend.serializers import UsersListSerializer, UserDetailSerializer, UserDetailWithAllData, CategoriesListSerializer, UserCategoryDetails, CategoryWithTopicsSerializer
 
 
-class CategoriesListView(generics.ListAPIView):
-    serializer_class = CategoriesWithUsersListSerializer
-    queryset = Categories.objects.all()
-
-
-class UsersListView(generics.ListAPIView):
+class AllUsersListView(generics.ListAPIView):
     serializer_class = UsersListSerializer
     queryset = User.objects.all()
 
 
-class UserDetailListView(generics.RetrieveAPIView):
+class UserDetailsView(generics.RetrieveAPIView):
     serializer_class = UserDetailSerializer
+    queryset = User.objects.all()
+
+
+class UserDetailWithAllDataView(generics.RetrieveAPIView):
+    serializer_class = UserDetailWithAllData
+    queryset = User.objects.all()
+
+
+class AllCategoriesListView(generics.ListAPIView):
+    serializer_class = CategoriesListSerializer
+    queryset = Categories.objects.all()
+
+
+class UserDetailsCategoriesView(generics.RetrieveAPIView):
+    serializer_class = UserCategoryDetails
     queryset = User.objects.all()
 
