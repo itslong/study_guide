@@ -4,39 +4,23 @@ from django.contrib.auth.models import User
 from .models import Categories, Topics, Notes
 
 
-class CategoriesListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Categories
-        exclude = ['user', ]
-
-
+# Notes
 class NotesListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notes
         exclude = ['topic', ]
 
 
-# class TopicsListSerializer(serializers.ModelSerializer):
-#
-#     class Meta:
-#         model = Topics
-#         exclude = ['category', ]
-#
-#
-# class CategoryDetailsWithTopicsSerializer(serializers.ModelSerializer):
-#       """
-#       A Category's detail with related topics at depth 1.
-#       """
-#     topics = TopicsListSerializer(source='topics_set', many=True)
-#
-#     class Meta:
-#         model = Categories
-#         exclude = ['user']
+# Topics
+class TopicsListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Topics
+        exclude = ['category', ]
 
 
-class TopicsWithNotesSerializer(serializers.ModelSerializer):
+class TopicsListWithNotesSerializer(serializers.ModelSerializer):
     """
-    Gets the related notes to this topic.
+    List of all Topics with related notes.
     """
     notes = NotesListSerializer(source='notes_set', many=True)
 
@@ -45,17 +29,47 @@ class TopicsWithNotesSerializer(serializers.ModelSerializer):
         fields = ['id', 'topic_name', 'notes']
 
 
-class CategoryWithTopicsSerializer(serializers.ModelSerializer):
+class TopicDetailsWithNotesSerializer(serializers.ModelSerializer):
     """
-    Gets the related topics to this category.
+    A topic's details and its related notes.
     """
-    topics = TopicsWithNotesSerializer(source='topics_set', many=True)
+    notes = NotesListSerializer(source='notes_set', many=True)
+
+    class Meta:
+        model = Topics
+        fields = ['id', 'topic_name', 'notes']
+
+
+# Categories
+class CategoriesListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Categories
+        exclude = ['user', ]
+
+
+class CategoryDetailsWithTopicsOnlySerializer(serializers.ModelSerializer):
+    """
+    A Category's detail with related topics at depth 1.
+    """
+    topics = TopicsListSerializer(source='topics_set', many=True)
 
     class Meta:
         model = Categories
         fields = ['id', 'category_name', 'category_desc', 'topics']
 
 
+class CategoryWithTopicsSerializer(serializers.ModelSerializer):
+    """
+    Gets the related topics to this category.
+    """
+    topics = TopicsListWithNotesSerializer(source='topics_set', many=True)
+
+    class Meta:
+        model = Categories
+        fields = ['id', 'category_name', 'category_desc', 'topics']
+
+
+# Users
 class UsersListSerializer(serializers.ModelSerializer):
     """
     Displays all Users
