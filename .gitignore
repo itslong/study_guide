@@ -66,9 +66,15 @@ coverage.xml
 ### Django ###
 *.log
 *.pyc
+static
+staticfiles
 
 # local settings for Django
 local_settings.py
 
 .env
 db.sqlite3
+
+### Node / React ###
+node_modules
+sg_web/webpack-stats.dev.json

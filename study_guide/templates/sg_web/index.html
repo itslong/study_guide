@@ -1,7 +1,9 @@
 {% extends 'base/base.html' %}
+{% load render_bundle from webpack_loader %}
+
 
 {% block react_entry %}
     <div id="root">
-
+    {% render_bundle 'main' 'js' %}
     </div>
 {% endblock %}
