@@ -1,0 +1,6 @@
+
+const ADD_ARTICLE = 'ADD_ARTICLE';
+const DATA_FETCHED = 'DATA_FETCHED';
+
+
+export { ADD_ARTICLE, DATA_FETCHED };
