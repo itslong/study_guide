@@ -1,10 +1,25 @@
 import React from 'react';
+import { List } from './common';
 
 
-const App = () => {
+const App = (props) => {
+    const { categories, topics, notes } = props.appState;
+
     return (
         <div>
-            <p>Hello world</p>
+            <div>
+                <h2>Connected components</h2>
+                <h3>Categories:</h3>
+                <List listName={'categories'} />
+            </div>
+            <div>
+                <h3>Topics:</h3>
+                <List listName={'topics'} />
+            </div>
+            <div>
+                <h3>Notes:</h3>
+                <List listName={'notes'} />
+            </div>
         </div>
     )
 };

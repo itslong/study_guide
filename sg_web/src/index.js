@@ -4,15 +4,23 @@ import { Provider } from 'react-redux';
 
 import { App as Example } from './components/examples/App';
 import App from './components/App';
-import { exampleStore as store } from './js/store';
+import { exampleStore, sgStore } from './js/store';
 
 
 // delete when react-router is implemented.
-const OptionalApp = window.location.pathname == '/example/' ? Example : App;
+let OptionalApp = App;
+let OptionalStore = sgStore;
+let OptionalAppState = sgStore.getState();
+
+if (window.location.pathname == '/example/') {
+    OptionalApp = Example;
+    OptionalStore = exampleStore;
+    OptionalAppState = exampleStore.getState();
+}
 
 ReactDOM.render(
-    <Provider store={store}>
-        <OptionalApp />
+    <Provider store={OptionalStore}>
+        <OptionalApp appState={OptionalAppState} />
     </Provider>,
     document.getElementById('root')
 );
