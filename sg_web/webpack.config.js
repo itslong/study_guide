@@ -5,6 +5,7 @@ const BundleTracker = require('webpack-bundle-tracker');
 
 
 module.exports = {
+    devtool: 'inline-source-map',
     entry: [
         'webpack-dev-server/client?http://localhost:3000',
         'webpack/hot/dev-server',
