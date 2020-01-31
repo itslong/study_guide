@@ -1,5 +1,5 @@
 import React from 'react';
-import { List } from './common';
+import { List, Form } from './common';
 
 
 const App = (props) => {
@@ -20,6 +20,7 @@ const App = (props) => {
                 <h3>Notes:</h3>
                 <List listName={'notes'} />
             </div>
+            <Form />
         </div>
     )
 };
