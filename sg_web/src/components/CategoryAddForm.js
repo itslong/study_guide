@@ -9,7 +9,7 @@ const fields = [
 ];
 
 
-class ConnectedForm extends Component {
+class CategoryAddForm extends Component {
     constructor(props) {
         super(props);
 
@@ -27,17 +27,22 @@ class ConnectedForm extends Component {
     handleChange(e) {
         this.setState({
             [e.target.name]: e.target.value
-        }, () => {
-            console.log('cat add form state: ', this.state)
         });
     }
 
     handleSubmit(e) {
         e.preventDefault();
 
-        const formValues = this.state;
+        const { category_name, category_desc } = this.state;
+        const formValues = Object.assign({}, {
+          category_name,
+          category_desc,
+          id: 3
+        }) ;
+
 
         // pass values to endpoint, then reset state.
+        this.props.addCategory(formValues)
 
         this.setState({
             category_name: '',
@@ -79,4 +84,4 @@ class ConnectedForm extends Component {
 }
 
 
-export default ConnectedForm;
+export default CategoryAddForm;
