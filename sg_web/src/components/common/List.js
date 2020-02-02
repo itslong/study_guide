@@ -11,16 +11,25 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const ConnectedList = (props) => {
-    const { listName } = props;
-    const listValues = props[listName];
+    const { listName, stateAttributes: listKeys } = props;
+    const listItems = props[listName];
+    /** 
+        listName: array of objects. Since the objects have dynamic names, transformation is required.
+        ex:
+        [ {category_name: ..., category_desc: ... }, {category_name: ..., category_desc: ... },... ]
+    **/
+
+    const listValues = listItems ? listItems.map((items, i) => {
+                return <li key={i}>{Object.entries(items).map(val => {
+                    return (
+                        val[1]
+                    );
+                })}</li>;
+            }) : '';
 
     return (
         <ul>
-            {listValues.map((items, i) => {
-                return (
-                    <li key={i}>{items.id}: {items.name}</li>
-                 )
-            })}
+            {listValues}
         </ul>
     )
 };

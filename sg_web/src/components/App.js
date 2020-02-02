@@ -1,10 +1,13 @@
 import React from 'react';
+
 import { List, Form } from './common';
 import CategoryAddForm from './CategoryAddForm';
 
 
 const App = (props) => {
-    const { categories, topics, notes } = props.appState;
+    const { addCategory, appState } = props;
+    const { categories, topics, notes } = appState;
+
 
     return (
         <div>
@@ -21,7 +24,9 @@ const App = (props) => {
                 <h3>Notes:</h3>
                 <List listName={'notes'} />
             </div>
-            <CategoryAddForm />
+            <CategoryAddForm 
+                addCategory={addCategory}
+            />
         </div>
     )
 };
