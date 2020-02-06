@@ -69,6 +69,15 @@ class CategoryWithTopicsSerializer(serializers.ModelSerializer):
         fields = ['id', 'category_name', 'category_desc', 'topics']
 
 
+class CategoryCreateSerializer(serializers.ModelSerializer):
+    """
+    Create a Category.
+    """
+    class Meta:
+        model = Categories
+        fields = '__all__'
+
+
 # Users
 class UsersListSerializer(serializers.ModelSerializer):
     """
