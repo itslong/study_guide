@@ -12,6 +12,7 @@ urlpatterns = [
 
     path('categories/', views.AllCategoriesListView.as_view()),
     path('category/<int:pk>/', views.CategoryDetailsWithTopicsView.as_view()),
+    path('category/add/', views.CategoryAddView.as_view()),
 
     path('topics/', views.AllTopicsListView.as_view()),
     path('topic/<int:pk>/', views.TopicDetailsWithNotesView.as_view()),

@@ -36,6 +36,14 @@ class CategoryDetailsWithTopicsView(generics.RetrieveAPIView):
     queryset = Categories.objects.all()
 
 
+class CategoryAddView(generics.CreateAPIView):
+    queryset = Categories.objects.all()
+    serializer_class = serializers.CategoryCreateSerializer
+
+    def perform_create(self, serializer):
+      serializer.save()
+
+
 # Topics based views
 class AllTopicsListView(generics.ListAPIView):
     serializer_class = serializers.TopicsListSerializer
