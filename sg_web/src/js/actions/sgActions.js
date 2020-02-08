@@ -1,9 +1,10 @@
-import { ADD_CATEGORY, ADD_TOPIC, ADD_NOTE } from '../constants/action-types';
+import { GET_CATEGORIES_BY_USER, ADD_TOPIC, ADD_NOTE, LOADING, SUCCESS } from '../constants';
+import { getAllCategoriesByUserId } from '../../components/endpoints';
 
 
-const addCategory = (payload) => {
+const getCategoriesByUser = (payload) => {
     return {
-        type: ADD_CATEGORY,
+        type: GET_CATEGORIES_BY_USER,
         payload
     }
 };
@@ -22,9 +23,17 @@ const addNote = (payload) => {
     }
 };
 
+const isLoading = () => {
+    return {
+        type: LOADING,
+    }
+}
+
+
 export {
-    addCategory,
+    getCategoriesByUser,
     addTopic,
     addNote,
+    isLoading,
 };
  

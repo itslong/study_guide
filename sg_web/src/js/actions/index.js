@@ -1,6 +1,7 @@
 export { addArticle, getData } from './example';
 export {
-    addCategory,
+    getCategoriesByUser,
     addTopic,
-    addNote
+    addNote,
+    isLoading,
 } from './sgActions';

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import { FormFields, Button } from './common';
-import { addCategory } from './endpoints/';
 
 
 const fields = [
@@ -35,15 +34,18 @@ class CategoryAddForm extends Component {
         e.preventDefault();
 
         const { category_name, category_desc, user_id } = this.state;
+        const user = user_id || 1;
+
         const formValues = Object.assign({}, {
           category_name,
           category_desc,
-          user: user_id || 1
+          user
         }) ;
 
 
         // pass values to endpoint, then reset state.
-        addCategory(formValues)
+        this.props.addCategory(formValues);
+        this.props.getCategoriesByUser(user);
 
         this.setState({
             category_name: '',
