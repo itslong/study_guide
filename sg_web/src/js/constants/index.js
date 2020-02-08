@@ -2,6 +2,7 @@ export {
     ADD_ARTICLE,
     DATA_FETCHED,
     GET_CATEGORIES_BY_USER,
+    ADD_CATEGORY,
     ADD_TOPIC,
     ADD_NOTE,
     LOADING,

@@ -1,4 +1,4 @@
-import { GET_CATEGORIES_BY_USER, ADD_TOPIC, ADD_NOTE, LOADING, SUCCESS, FAILURE } from '../constants';
+import { GET_CATEGORIES_BY_USER, ADD_CATEGORY, ADD_TOPIC, ADD_NOTE, LOADING, SUCCESS, FAILURE } from '../constants';
 
 
 const exampleCategories = [
@@ -23,6 +23,13 @@ const getCategoriesByUser = (state, action) => {
     };
 };
 
+const addCategory = (state, action) => {
+    return {
+        ...state,
+        isLoading: false
+    }
+}
+
 const addTopic = (state, action) => {
     return state.topics.concat(action.payload);
 };
@@ -42,6 +49,10 @@ const isLoading = (state, action) => {
 // TODO: will refactor into 3 reducers
 const sgReducer = (state=initialState, action) => {
     switch(action.type) {
+        case ADD_CATEGORY: {
+            return addCategory(state, action);
+        }
+
         case ADD_TOPIC: {
             return addTopic(state, action);
         }
