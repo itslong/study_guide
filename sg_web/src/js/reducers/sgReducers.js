@@ -1,21 +1,34 @@
-import { ADD_CATEGORY, ADD_TOPIC, ADD_NOTE } from '../constants/action-types';
+import { GET_CATEGORIES_BY_USER, ADD_CATEGORY, ADD_TOPIC, ADD_NOTE, LOADING, SUCCESS, FAILURE } from '../constants';
 
+
+const exampleCategories = [
+    {id: 1, category_name: 'something', category_desc: 'or nothing'}, 
+    {id: 2, category_name: 'more', category_desc: ''},
+]
 
 const initialState = {
-    categories: [
-      {id: 1, category_name: 'something', category_desc: 'or nothing'}, 
-      {id: 2, category_name: 'more', category_desc: ''},
-    ],
+    categories: [],
     topics: [{id: 1, name: 'cooking'}, {id: 2, name: 'zombies'}, {id:3, name: 'galore'}],
-    notes: []
+    notes: [],
+    isLoading: false,
+    user: null
 };
 
+
+const getCategoriesByUser = (state, action) => {
+    return {
+        ...state,
+        isLoading: false,
+        categories: action.payload
+    };
+};
 
 const addCategory = (state, action) => {
-    return Object.assign({}, state, {
-        categories: state.categories.concat(action.payload)
-    });
-};
+    return {
+        ...state,
+        isLoading: false
+    }
+}
 
 const addTopic = (state, action) => {
     return state.topics.concat(action.payload);
@@ -24,6 +37,14 @@ const addTopic = (state, action) => {
 const addNote = (state, action) => {
     return state.notes.concat(action.payload);
 };
+
+const isLoading = (state, action) => {
+    return {
+        ...state,
+        isLoading: true,
+    };
+}
+
 
 // TODO: will refactor into 3 reducers
 const sgReducer = (state=initialState, action) => {
@@ -39,6 +60,15 @@ const sgReducer = (state=initialState, action) => {
         case ADD_NOTE: {
             return addNote(state, action);
         }
+
+        case LOADING: {
+            return isLoading(state, action);
+        }
+
+        case GET_CATEGORIES_BY_USER: {
+            return getCategoriesByUser(state, action);
+        }
+
         default:
             return state;
     }

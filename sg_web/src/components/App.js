@@ -2,10 +2,11 @@ import React from 'react';
 
 import { List, Form } from './common';
 import CategoryAddForm from './CategoryAddForm';
+import CategoryView from './categories/CategoryView';
 
 
 const App = (props) => {
-    const { addCategory, appState } = props;
+    const { addCategory, appState, getCategoriesByUser } = props;
     const { categories, topics, notes } = appState;
 
 
@@ -14,7 +15,7 @@ const App = (props) => {
             <div>
                 <h2>Connected components</h2>
                 <h3>Categories:</h3>
-                <List listName={'categories'} />
+                <CategoryView />
             </div>
             <div>
                 <h3>Topics:</h3>
@@ -24,9 +25,7 @@ const App = (props) => {
                 <h3>Notes:</h3>
                 <List listName={'notes'} />
             </div>
-            <CategoryAddForm 
-                addCategory={addCategory}
-            />
+            <CategoryAddForm />
         </div>
     )
 };

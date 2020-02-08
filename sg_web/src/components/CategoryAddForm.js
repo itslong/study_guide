@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import { FormFields, Button } from './common';
-import { addCategory } from './endpoints/';
-
+import { addCategoryToUser } from '../js/actions';
 
 const fields = [
     {type: 'input', name: 'category_name', label: 'Category Name'},
@@ -10,14 +10,13 @@ const fields = [
 ];
 
 
-class CategoryAddForm extends Component {
+class ConnectedCategoryAddForm extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             category_name: '',
             category_desc: '',
-            user_id: props.user_id
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -35,20 +34,23 @@ class CategoryAddForm extends Component {
         e.preventDefault();
 
         const { category_name, category_desc, user_id } = this.state;
+        const { user } = this.props;
+        const id = user ? user : 1;
+
         const formValues = Object.assign({}, {
           category_name,
           category_desc,
-          user: user_id || 1
+          user: id
         }) ;
 
 
         // pass values to endpoint, then reset state.
-        addCategory(formValues)
+        this.props.addCategoryToUser(formValues);
 
         this.setState({
             category_name: '',
             category_desc: '',
-        })
+        });
     }
 
     render() {
@@ -84,5 +86,15 @@ class CategoryAddForm extends Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    const { user } = state;
+    const id = user ? user : 1;
+
+    return {
+        user: id
+    }
+}
+
+const CategoryAddForm = connect(mapStateToProps, { addCategoryToUser })(ConnectedCategoryAddForm);
 
 export default CategoryAddForm;

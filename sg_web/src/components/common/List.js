@@ -3,15 +3,17 @@ import { connect } from 'react-redux';
 
 
 const mapStateToProps = (state, ownProps) => {
+    const { isLoading } = state;
     const { listName: stateName } = ownProps;
 
     return {
+        isLoading,
         [stateName]: state[stateName]
     };
 };
 
 const ConnectedList = (props) => {
-    const { listName, stateAttributes: listKeys } = props;
+    const { listName, stateAttributes: listKeys, isLoading } = props;
     const listItems = props[listName];
     /** 
         listName: array of objects. Since the objects have dynamic names, transformation is required.
@@ -19,13 +21,16 @@ const ConnectedList = (props) => {
         [ {category_name: ..., category_desc: ... }, {category_name: ..., category_desc: ... },... ]
     **/
 
-    const listValues = listItems ? listItems.map((items, i) => {
+    const sortedListItems = listItems.sort((a, b) => {
+        return a.id - b.id
+    });
+    const listValues = sortedListItems && !isLoading ? sortedListItems.map((items, i) => {
                 return <li key={i}>{Object.entries(items).map(val => {
                     return (
                         val[1]
                     );
                 })}</li>;
-            }) : '';
+            }) : 'Loading...';
 
     return (
         <ul>
