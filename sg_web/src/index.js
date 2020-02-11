@@ -10,7 +10,7 @@ import { exampleStore, sgStore } from './js/store';
 // delete when react-router is implemented.
 let OptionalStore = sgStore;
 let OptionalAppState = sgStore.getState();
-let OptionalApp = <App appState={OptionalAppState} />;
+let OptionalApp = <App />;
 
 
 if (window.location.pathname == '/example/') {

@@ -33,9 +33,10 @@ class ConnectedCategoryAddForm extends Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        const { category_name, category_desc, user_id } = this.state;
+        const { category_name, category_desc } = this.state;
         const { user } = this.props;
-        const id = user ? user : 1;
+        // no longer need to get userId after Auth is implemented.
+        const id = user.userId ? user.userId : 1;
 
         const formValues = Object.assign({}, {
           category_name,
@@ -88,10 +89,9 @@ class ConnectedCategoryAddForm extends Component {
 
 const mapStateToProps = (state) => {
     const { user } = state;
-    const id = user ? user : 1;
 
     return {
-        user: id
+        user
     }
 }
 

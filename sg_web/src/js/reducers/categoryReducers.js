@@ -7,11 +7,8 @@ const exampleCategories = [
 ]
 
 const initialState = {
-    categories: [],
-    topics: [{id: 1, name: 'cooking'}, {id: 2, name: 'zombies'}, {id:3, name: 'galore'}],
-    notes: [],
+    items: [],
     isLoading: false,
-    user: null
 };
 
 
@@ -19,7 +16,7 @@ const getCategoriesByUser = (state, action) => {
     return {
         ...state,
         isLoading: false,
-        categories: action.payload
+        items: action.payload
     };
 };
 
@@ -30,14 +27,6 @@ const addCategory = (state, action) => {
     }
 }
 
-const addTopic = (state, action) => {
-    return state.topics.concat(action.payload);
-};
-
-const addNote = (state, action) => {
-    return state.notes.concat(action.payload);
-};
-
 const isLoading = (state, action) => {
     return {
         ...state,
@@ -47,18 +36,10 @@ const isLoading = (state, action) => {
 
 
 // TODO: will refactor into 3 reducers
-const sgReducer = (state=initialState, action) => {
+const categoryReducers = (state=initialState, action) => {
     switch(action.type) {
         case ADD_CATEGORY: {
             return addCategory(state, action);
-        }
-
-        case ADD_TOPIC: {
-            return addTopic(state, action);
-        }
-
-        case ADD_NOTE: {
-            return addNote(state, action);
         }
 
         case LOADING: {
@@ -75,4 +56,4 @@ const sgReducer = (state=initialState, action) => {
 };
 
 
-export default sgReducer;
+export default categoryReducers;
