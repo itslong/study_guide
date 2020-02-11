@@ -33,9 +33,9 @@ const createCategory = (formData) => {
     const endpoint = new URL(CATEGORY_ADD_PATH);
 
     const headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrfToken,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
     };
 
     return fetch(endpoint, {

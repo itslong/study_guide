@@ -26,6 +26,18 @@ const USER_CATEGORIES_ALL_PATH = BASE_PATH + USER + '/:id' + CATEGORIES;
 // Notes
 
 
+// authentication
+const AUTH = '/auth';
+const LOGIN = '/login/';
+const REGISTER = '/register/';
+const LOGOUT = '/logout/';
+const AUTH_PATH = BASE_PATH + AUTH;
+
+const REGISTER_PATH = AUTH_PATH + REGISTER;
+const LOGIN_PATH = AUTH_PATH + LOGIN;
+const LOGOUT_PATH = AUTH_PATH + LOGOUT;
+
+const LOAD_USER_PATH = BASE_PATH + AUTH + USER;
 
 
 export {
@@ -34,4 +46,8 @@ export {
     CATEGORY_ADD_PATH,
     BASE_PATH,
     USER_CATEGORIES_ALL_PATH,
+    LOAD_USER_PATH,
+    REGISTER_PATH,
+    LOGIN_PATH,
+    LOGOUT_PATH,
 };
