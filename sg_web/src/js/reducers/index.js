@@ -1,2 +1,11 @@
+import { combineReducers } from 'redux';
+
 export { default as exampleReducer } from './examples';
-export { default as sgReducer } from './sgReducers';
+import categoryReducers from './categoryReducers';
+import authReducers from './authReducers';
+
+
+export const rootReducer = combineReducers({
+    categories: categoryReducers,
+    user: authReducers
+});

@@ -3,17 +3,17 @@ import { connect } from 'react-redux';
 
 
 const mapStateToProps = (state, ownProps) => {
-    const { isLoading } = state;
-    const { listName: stateName } = ownProps;
+    const { listName } = ownProps;
 
+    const { items, isLoading} = state[listName];
     return {
         isLoading,
-        [stateName]: state[stateName]
+        [listName]: items
     };
 };
 
 const ConnectedList = (props) => {
-    const { listName, stateAttributes: listKeys, isLoading } = props;
+    const { listName, isLoading } = props;
     const listItems = props[listName];
     /** 
         listName: array of objects. Since the objects have dynamic names, transformation is required.
