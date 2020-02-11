@@ -7,5 +7,13 @@ export {
     ADD_NOTE,
     LOADING,
     SUCCESS,
-    FAILURE
+    FAILURE,
+    USER_LOADING,
+    USER_LOADED,
+    AUTH_ERROR,
+    REGISTER_SUCCESS,
+    REGISTER_FAIL,
+    LOGIN_SUCCESS,
+    LOGIN_FAIL,
+    LOGOUT_SUCCESS,
 } from './action-types';
