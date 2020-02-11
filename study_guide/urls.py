@@ -25,5 +25,9 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('api/', include('sg_backend.urls'))
+    path('api/', include('sg_backend.urls')),
+]
+
+urlpatterns += [
+    path('api/auth/', include('sg_auth.urls')),
 ]
