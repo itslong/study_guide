@@ -44,8 +44,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'knox',
     'webpack_loader',
     'sg_backend',
+    'sg_auth',
 ]
 
 MIDDLEWARE = [
@@ -145,3 +147,11 @@ WEBPACK_LOADER = {
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'sg_web/bundles'), )
+
+
+# rest_framework_configs
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication', ),
+}
+
+
