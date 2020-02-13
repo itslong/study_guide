@@ -6,3 +6,7 @@ export {
     addNote,
     isLoading,
 } from './sgActions';
+export { 
+    fetchUserInfo,
+    authenticateUser
+} from './authActions';

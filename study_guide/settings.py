@@ -153,5 +153,3 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'sg_web/bundles'), )
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication', ),
 }
-
-

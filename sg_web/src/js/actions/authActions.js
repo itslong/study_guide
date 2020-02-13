@@ -9,17 +9,23 @@ import {
 import { userLogin, userLoad } from '../../components/endpoints';
 
 
-const fetchUserState = () => {
+const fetchUserInfo = () => {
     return (dispatch, getState) => {
         dispatch(userLoading());
-        const token = getState().auth.token;
+        const { user } = getState();
+        const { token } = user;
 
-        const user = userLoad(token);
-        user.then(response => {
-            dispatch(userLoaded(response.data));
+        const userInfo = userLoad(token);
+        userInfo.then(response => {
+            const { id } = response;
+            if (id) {
+                dispatch(userLoaded(response));
+            }
+            return response;
         })
         .catch(error => {
             dispatch(authError(error));
+            return error;
         })
     };
 };
@@ -28,11 +34,30 @@ const authenticateUser = (formData) => {
     return dispatch => {
         const auth = userLogin(formData);
         auth.then(response => {
-            dispatch(userLoginSuccess(response.data));
-            return response.data;
+            const { user, token } = response;
+
+            if (token) {
+                dispatch(userLoginSuccess(token));
+                return {
+                    status: 200,
+                    user
+                };
+            }
+            return response
+        })
+        .then((resp) => {
+            const { error, status } = resp;
+            if (!error) {
+                dispatch(fetchUserInfo());
+                return resp
+            }
+
+            dispatch(userLoginFail());
+            return resp;
         })
         .catch(error => {
-            dispatch(userLoginFail(error.response.data));
+            dispatch(userLoginFail());
+            return error;
         })
     };
 };
@@ -73,6 +98,6 @@ const authError = () => {
 
 
 export {
-    fetchUserState,
+    fetchUserInfo,
     authenticateUser
 };

@@ -12,9 +12,9 @@ import {
 
 const initialState = {
     username: null,
-    userId: null,
+    userId: 1,
     isAuthenticated: false,
-    isAdmin: false,
+    isAdmin: true,
     token: localStorage.getItem('token'),
     isLoading: false
 };
@@ -23,14 +23,22 @@ const initialState = {
 const authReducers = (state=initialState, action) => {
     switch(action.type) {
         case USER_LOADING: {
+            return {
+                ...state,
+                isLoading: true
+            };
 
         }
 
         case USER_LOADED: {
-
-        }
-
-        case AUTH_ERROR: {
+            const { id: userId, username, is_staff: isAdmin } = action.payload;
+            return {
+                ...state,
+                userId,
+                username,
+                isAdmin,
+                isLoading: false
+            };
 
         }
 
@@ -38,21 +46,33 @@ const authReducers = (state=initialState, action) => {
 
         }
 
-        case REGISTER_FAIL: {
 
-        }
 
         case LOGIN_SUCCESS: {
-
+            localStorage.setItem('token', action.payload.token);
+            return {
+                ...state,
+                isAuthenticated: true,
+                isLoading: false,
+                token: action.payload
+            };
         }
 
-        case LOGIN_FAIL: {
-
-        }
-
-        case LOGOUT_SUCCESS: {
-
-        }
+        case AUTH_ERROR:
+        case REGISTER_FAIL: 
+        case LOGIN_FAIL:
+        case LOGOUT_SUCCESS:
+            localStorage.removeItem('token');
+            return {
+                ...state,
+                username: null,
+                userId: null,
+                isAuthenticated: false,
+                isAdmin: false,
+                token: null,
+                isLoading: false
+            }
+        
 
         default:
             return state;
