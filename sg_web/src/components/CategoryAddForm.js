@@ -39,9 +39,9 @@ class ConnectedCategoryAddForm extends Component {
         const id = user.userId ? user.userId : 1;
 
         const formValues = Object.assign({}, {
-          category_name,
-          category_desc,
-          user: id
+            category_name,
+            category_desc,
+            user: id
         }) ;
 
 

@@ -22,8 +22,19 @@ const userLogin = (formData) => {
         headers
     })
     .then(response => {
-        const { status } = response;
-        console.log('the response ', response)
+        const { status, statusText } = response;
+        if (status === 200) {
+            return response.json();
+        }
+
+        return {
+            response,
+            status,
+            error: statusText
+        };
+    })
+    .catch(error => {
+        return error;
     })
 };
 
@@ -37,7 +48,18 @@ const userLoad = (token) => {
 
     return fetch(endpoint, { headers })
     .then(response => {
-        console.log('load user ', response)
+        const { status, statusText } = response;
+        if (status == 200) {
+            return response.json();
+        }
+
+        return { 
+            status,
+            error: statusText
+        }
+    })
+    .catch(error => {
+        return error;
     })
 }
 
