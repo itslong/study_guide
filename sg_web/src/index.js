@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
 
 import { App as Example } from './components/examples/App';
 import App from './components/App';
 import { exampleStore, sgStore } from './js/store';
+import history from './components/history';
 
 
 // delete when react-router is implemented.
@@ -22,7 +24,9 @@ if (window.location.pathname == '/example/') {
 
 ReactDOM.render(
     <Provider store={OptionalStore}>
-        {OptionalApp}
+        <Router history={history}>
+            {OptionalApp}
+        </Router>
     </Provider>,
     document.getElementById('root')
 );

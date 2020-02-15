@@ -12,8 +12,7 @@ class ConnectedCategoryView extends Component {
 
     componentDidMount() {
         const { user } = this.props;
-        // refactor after auth
-        const userId = user.userId ? user.userId : 1;
+        const { userId } = user;
         this.props.getCategoriesByUser(userId)
     }
 
@@ -21,20 +20,17 @@ class ConnectedCategoryView extends Component {
     render() {
 
         return (
-            <List listName={'categories'} />
-        )
+            <div>
+                <h3>Categories:</h3>
+                <List listName={'categories'} />
+            </div>
+        );
     }
 }
 
 const mapStateToProps = (state) => {
-    const { categories, user } = state;
-    const { isLoading } = categories;
-
-    const id = user.userId ? user.userId : 1;
-
+    const { user } = state;
     return {
-        categories,
-        isLoading,
         user
     }
 };

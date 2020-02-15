@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import { FormFields, Button } from './common';
 import { authenticateUser } from './../js/actions'
-
+import { HOME } from '../routes/routes';
 
 
 const formFields = {
@@ -46,7 +47,7 @@ class ConnectedLoginForm extends Component {
 
     render() {
         if (this.props.isAuthenticated) {
-            // return Redirect to home
+            return <Redirect to={HOME} />
         }
 
         const fieldsWithHandler = Object.entries(formFields).map(item => {
