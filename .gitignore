@@ -76,5 +76,5 @@ local_settings.py
 db.sqlite3
 
 ### Node / React ###
-node_modules
+node_modules/
 frontend/webpack-stats.dev.json
