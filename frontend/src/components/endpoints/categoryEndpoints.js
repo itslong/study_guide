@@ -1,6 +1,6 @@
 import { CATEGORY_ADD_PATH, USER_CATEGORIES_ALL_PATH } from '../../routes/routes';
 import getCookie from './getCookie';
-import { getCategoriesByUser, isLoading } from '../../js/actions';
+import { getCategoriesByUser, isLoading } from '../../actions';
 
 
 const getAllCategoriesByUserId = (userId) => {

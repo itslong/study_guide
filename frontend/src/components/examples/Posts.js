@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { getData } from '../../js/actions';
+import { getData } from '../../actions';
 
 
 class Post extends Component {

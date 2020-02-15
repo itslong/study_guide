@@ -6,7 +6,7 @@ import {
     LOGIN_FAIL
 } from '../constants';
 
-import { userLogin, userLoad } from '../../components/endpoints';
+import { userLogin, userLoad } from '../components/endpoints';
 
 
 const fetchUserInfo = () => {

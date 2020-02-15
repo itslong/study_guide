@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { FormFields, Button } from './common';
-import { authenticateUser } from './../js/actions'
-import { HOME } from '../routes/routes';
+import { FormFields, Button } from '../common';
+import { authenticateUser } from '../../actions';
+import { HOME } from '../../routes/routes';
 
 
 const formFields = {

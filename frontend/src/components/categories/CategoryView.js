@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { List } from '../common';
-import { getCategoriesByUser } from '../../js/actions';
+import { getCategoriesByUser } from '../../actions';
+import CategoryAddForm from './CategoryAddForm';
 
 
 class ConnectedCategoryView extends Component {
@@ -23,6 +24,7 @@ class ConnectedCategoryView extends Component {
             <div>
                 <h3>Categories:</h3>
                 <List listName={'categories'} />
+                <CategoryAddForm />
             </div>
         );
     }

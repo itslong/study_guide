@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { FormFields, Button } from './common';
-import { addCategoryToUser } from '../js/actions';
+import { FormFields, Button } from '../common';
+import { addCategoryToUser } from '../../actions';
+
 
 const fields = [
     {type: 'input', name: 'category_name', label: 'Category Name'},
     {type: 'input', name: 'category_desc', label: 'Description'},
 ];
-
 
 class ConnectedCategoryAddForm extends Component {
     constructor(props) {

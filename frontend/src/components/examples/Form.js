@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { addArticle } from '../../js/actions';
+import { addArticle } from '../../actions';
 import { Button, Input } from '../common';
 
 

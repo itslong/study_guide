@@ -5,7 +5,7 @@ import { Router } from 'react-router-dom';
 
 import { App as Example } from './components/examples/App';
 import App from './components/App';
-import { exampleStore, sgStore } from './js/store';
+import { exampleStore, sgStore } from './store';
 import history from './components/history';
 
 

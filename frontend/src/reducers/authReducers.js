@@ -10,11 +10,11 @@ import {
 } from '../constants';
 
 
-const initialState = {
+let initialState = {
     username: null,
-    userId: 1,
+    userId: null,
     isAuthenticated: false,
-    isAdmin: true,
+    isAdmin: false,
     token: localStorage.getItem('token'),
     isLoading: false
 };
@@ -49,7 +49,7 @@ const authReducers = (state=initialState, action) => {
 
 
         case LOGIN_SUCCESS: {
-            localStorage.setItem('token', action.payload.token);
+            localStorage.setItem('token', action.payload);
             return {
                 ...state,
                 isAuthenticated: true,

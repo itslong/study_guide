@@ -21,16 +21,21 @@ const ConnectedList = (props) => {
         [ {category_name: ..., category_desc: ... }, {category_name: ..., category_desc: ... },... ]
     **/
 
-    const sortedListItems = listItems.sort((a, b) => {
+    const sortedListItems = listItems.length > 0 ? listItems.sort((a, b) => {
         return a.id - b.id
-    });
-    const listValues = sortedListItems && !isLoading ? sortedListItems.map((items, i) => {
+    }) : [];
+
+    let listValues = 'Loading...';
+    if (!isLoading) {
+        listValues = sortedListItems.length > 0 ? 
+            sortedListItems.map((items, i) => {
                 return <li key={i}>{Object.entries(items).map(val => {
                     return (
                         val[1]
                     );
                 })}</li>;
-            }) : 'Loading...';
+            }) : 'No categories for this user.';
+    } 
 
     return (
         <ul>

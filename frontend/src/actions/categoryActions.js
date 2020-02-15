@@ -1,5 +1,5 @@
 import { GET_CATEGORIES_BY_USER, ADD_CATEGORY, ADD_TOPIC, ADD_NOTE, LOADING, SUCCESS } from '../constants';
-import { getAllCategoriesByUserId, createCategory } from '../../components/endpoints';
+import { getAllCategoriesByUserId, createCategory } from '../components/endpoints';
 
 
 // action creators

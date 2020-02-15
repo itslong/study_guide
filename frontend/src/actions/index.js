@@ -5,7 +5,7 @@ export {
     addTopic,
     addNote,
     isLoading,
-} from './sgActions';
+} from './categoryActions';
 export { 
     fetchUserInfo,
     authenticateUser
