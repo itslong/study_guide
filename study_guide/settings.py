@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'webpack_loader',
     'sg_backend',
     'sg_auth',
+    'frontend',
 ]
 
 MIDDLEWARE = [
@@ -133,7 +134,7 @@ USE_TZ = True
 WEBPACK_LOADER = {
     'DEFAULT': {
         'BUNDLE_DIR_NAME': 'dev/bundles/',
-        'STATS_FILE': os.path.join(BASE_DIR + '/sg_web/', 'webpack-stats.dev.json'),
+        'STATS_FILE': os.path.join(BASE_DIR + '/frontend/', 'webpack-stats.dev.json'),
         'POLL_INTERVAL': 0.1,
         'TIMEOUT': None,
         'IGNORE': ['.+\.hot-update.js', '.+\.map']
@@ -146,7 +147,7 @@ WEBPACK_LOADER = {
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'sg_web/bundles'), )
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'frontend/bundles'), )
 
 
 # rest_framework_configs
