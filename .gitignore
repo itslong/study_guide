@@ -77,4 +77,4 @@ db.sqlite3
 
 ### Node / React ###
 node_modules
-sg_web/webpack-stats.dev.json
+frontend/webpack-stats.dev.json
