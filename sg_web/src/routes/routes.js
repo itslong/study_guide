@@ -6,6 +6,7 @@ const BASE_PORT = ':8000';
 const API_PATH = '/api';
 const BASE_PATH = BASE_SCHEME + BASE_DOMAIN + BASE_PORT + API_PATH;
 
+const HOME = '/';
 
 // Categories
 const CATEGORY = '/category';
@@ -50,4 +51,6 @@ export {
     REGISTER_PATH,
     LOGIN_PATH,
     LOGOUT_PATH,
+    LOGIN,
+    HOME
 };
