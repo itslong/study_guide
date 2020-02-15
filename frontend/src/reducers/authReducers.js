@@ -37,7 +37,8 @@ const authReducers = (state=initialState, action) => {
                 userId,
                 username,
                 isAdmin,
-                isLoading: false
+                isLoading: false,
+                isAuthenticated: true,
             };
 
         }
