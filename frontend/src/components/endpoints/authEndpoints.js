@@ -3,7 +3,6 @@ import getCookie from './getCookie';
 
 
 
-
 const userLogin = (formData) => {
     const csrfToken = getCookie('csrftoken');
 

@@ -6,13 +6,15 @@ import { LOGIN } from '../../routes/routes';
 
 
 const ConnectedPrivateRoute = ({ component: Component, user, ...rest }) => {
+    const { isLoading, isAuthenticated, username, userId } = user;
+
     return (
         <Route
             {...rest}
             render={(props) => {
-                if (user.isLoading) {
+                if (isLoading || isAuthenticated && !userId) {
                     return <div>Loading...</div>;
-                } else if (!user.isAuthenticated) {
+                } else if (!isAuthenticated) {
                     return <Redirect to={LOGIN} />;
                 } else {
                     return <Component {...props} />
