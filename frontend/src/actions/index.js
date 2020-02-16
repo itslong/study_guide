@@ -8,5 +8,6 @@ export {
 } from './categoryActions';
 export { 
     fetchUserInfo,
-    authenticateUser
+    authenticateUser,
+    logoutUser
 } from './authActions';

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { List, Form } from './common';
+import { List, Form, Button } from './common';
 import MainRoutes from './MainRoutes';
-import { fetchUserInfo } from '../actions';
+import { fetchUserInfo, logoutUser } from '../actions';
 
 
 class ConnectedApp extends Component {
     componentDidMount() {
-        const { userId, token, isAuthenticated } = this.props.user;
+        const { userId, token } = this.props.user;
 
         if (token && !userId) {
             this.props.fetchUserInfo(token);
@@ -16,8 +16,20 @@ class ConnectedApp extends Component {
     }
 
     render() {
+        const { isAuthenticated } = this.props.user;
+
+        const logoutButton = isAuthenticated ?
+            <Button 
+                id={'logut'}
+                title={'Logout'}
+                action={() => this.props.logoutUser()}
+            /> : '';
+
         return (
             <div>
+                <div>
+                    {logoutButton}
+                </div>
                 <MainRoutes />
             </div>
         );
@@ -33,6 +45,6 @@ const mapStateToProps = (state) => {
 };
 
 
-const App = connect(mapStateToProps, { fetchUserInfo })(ConnectedApp);
+const App = connect(mapStateToProps, { fetchUserInfo, logoutUser })(ConnectedApp);
 
 export default App;

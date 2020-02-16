@@ -3,10 +3,11 @@ import {
     USER_LOADED,
     AUTH_ERROR,
     LOGIN_SUCCESS,
-    LOGIN_FAIL
+    LOGIN_FAIL,
+    LOGOUT_SUCCESS
 } from '../constants';
 
-import { userLogin, userLoad } from '../components/endpoints';
+import { userLogin, userLoad, userLogout } from '../components/endpoints';
 
 
 const fetchUserInfo = () => {
@@ -62,6 +63,22 @@ const authenticateUser = (formData) => {
     };
 };
 
+const logoutUser = () => {
+    return (dispatch, getState) => {
+        const { user } = getState();
+        const { token } = user;
+
+        const logout = userLogout(token);
+        logout.then(response => {
+            dispatch(userLogoutSuccess())
+            return response
+        })
+        .catch(error => {
+            return error;
+        })
+    };
+};
+
 
 const userLoading = () => {
     return {
@@ -89,15 +106,21 @@ const userLoginFail = () => {
     };
 };
 
-
 const authError = () => {
     return {
         type: AUTH_ERROR
     }
 };
 
+const userLogoutSuccess = () => {
+    return {
+        type: LOGOUT_SUCCESS
+    };
+};
+
 
 export {
     fetchUserInfo,
-    authenticateUser
+    authenticateUser,
+    logoutUser
 };

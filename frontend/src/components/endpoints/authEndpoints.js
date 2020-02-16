@@ -1,6 +1,5 @@
-import { REGISTER_PATH, LOGIN_PATH, LOAD_USER_PATH } from '../../routes/routes';
+import { REGISTER_PATH, LOGIN_PATH, LOAD_USER_PATH, LOGOUT_PATH } from '../../routes/routes';
 import getCookie from './getCookie';
-
 
 
 const userLogin = (formData) => {
@@ -60,10 +59,35 @@ const userLoad = (token) => {
     .catch(error => {
         return error;
     })
-}
+};
 
+const userLogout = (token) => {
+    const csrfToken = getCookie('csrftoken');
+
+    const headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`,
+        'X-CSRFToken': csrfToken,
+    };
+
+    const endpoint = new URL(LOGOUT_PATH);
+
+    return fetch(endpoint, {
+        method: 'POST',
+        mode: 'same-origin',
+        headers
+    })
+    .then(response => {
+        return response;
+    })
+    .catch(error => {
+        return error;
+    })
+};
 
 export {
     userLogin,
-    userLoad
+    userLoad,
+    userLogout,
 };
