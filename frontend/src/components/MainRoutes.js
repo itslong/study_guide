@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import CategoryView from './categories/CategoryView';
 import { LoginForm } from './auth';
-import { PrivateRoute } from './common';
+import { PrivateRoute, NotFound } from './common';
 import { LOGIN, HOME } from '../routes/routes';
 
 
@@ -13,6 +13,7 @@ const MainRoutes = () => {
         <Switch>
             <PrivateRoute exact path={HOME} component={CategoryView} />
             <Route exact path={LOGIN} component={LoginForm} />
+            <Route component={NotFound} />
         </Switch>
     )
 };
