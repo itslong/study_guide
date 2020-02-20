@@ -27,7 +27,6 @@ const authReducers = (state=initialState, action) => {
                 ...state,
                 isLoading: true
             };
-
         }
 
         case USER_LOADED: {
@@ -40,15 +39,9 @@ const authReducers = (state=initialState, action) => {
                 isLoading: false,
                 isAuthenticated: true,
             };
-
         }
 
-        case REGISTER_SUCCESS: {
-
-        }
-
-
-
+        case REGISTER_SUCCESS: 
         case LOGIN_SUCCESS: {
             localStorage.setItem('token', action.payload);
             return {
@@ -73,7 +66,6 @@ const authReducers = (state=initialState, action) => {
                 token: null,
                 isLoading: false
             }
-        
 
         default:
             return state;

@@ -86,8 +86,45 @@ const userLogout = (token) => {
     })
 };
 
+
+const userRegister = (formData) => {
+    const csrfToken = getCookie('csrftoken');
+
+    const headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
+    };
+
+    const endpoint = new URL(REGISTER_PATH);
+
+    return fetch(endpoint, {
+        method: 'POST',
+        mode: 'same-origin',
+        body: JSON.stringify(formData),
+        headers
+    })
+    .then(response => {
+        const { status, statusText } = response;
+
+        if (status === 200) {
+            return response.json()
+        }
+
+        return {
+            response,
+            status,
+            error: statusText
+        }
+    })
+    .catch(error => {
+        return error;
+    })
+};
+
 export {
     userLogin,
     userLoad,
     userLogout,
+    userRegister,
 };
