@@ -10,7 +10,7 @@ const HOME = '/';
 
 // Categories
 const CATEGORY = '/category';
-const CATEGORIES = '/categories';
+const CATEGORIES = '/categories/';
 
 const CATEGORIES_ALL_PATH = BASE_PATH + CATEGORIES;
 const CATEGORY_DETAIL_PATH = BASE_PATH + CATEGORY + '/:id/';
