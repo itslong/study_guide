@@ -11,3 +11,4 @@ export {
     authenticateUser,
     logoutUser
 } from './authActions';
+export { registerUser } from './registerActions';
