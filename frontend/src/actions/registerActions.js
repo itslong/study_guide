@@ -1,5 +1,6 @@
 import { REGISTER_SUCCESS, REGISTER_FAIL } from '../constants';
 import { userRegister } from '../components/endpoints';
+import { fetchUserInfo } from './authActions';
 
 
 const registerUser = (formData) => {
@@ -16,6 +17,21 @@ const registerUser = (formData) => {
 
             dispatch(userRegisterFail());
             return response;
+        })
+        .then(resp => {
+            const { token } = resp;
+
+            if (token) {
+                dispatch(fetchUserInfo());
+                return {
+                    status: 200
+                };
+            }
+
+            return {
+                error: 'Something went wrong',
+                response: resp
+            };
         })
         .catch(error => {
             dispatch(userRegisterFail());
