@@ -47,17 +47,17 @@ const authenticateUser = (formData) => {
             return response
         })
         .then((resp) => {
-            const { error, status } = resp;
-            if (!error) {
+            const { errors, status } = resp;
+            if (status != 400 && !errors) {
                 dispatch(fetchUserInfo());
                 return resp
             }
 
-            dispatch(userLoginFail());
+            dispatch(userLoginFail(resp));
             return resp;
         })
         .catch(error => {
-            dispatch(userLoginFail());
+            dispatch(userLoginFail(error));
             return error;
         })
     };
@@ -100,9 +100,10 @@ const userLoginSuccess = (payload) => {
     };
 };
 
-const userLoginFail = () => {
+const userLoginFail = (payload) => {
     return {
-        type: LOGIN_FAIL
+        type: LOGIN_FAIL,
+        payload
     };
 };
 

@@ -2,6 +2,10 @@ import React from 'react';
 
 
 const Input = (props) => {
+    const displayFieldError = props.fieldError ?
+        <div className={'error'} style={{display: 'inline'}}>{props.fieldError}</div>
+        : '';
+
     return (
         <div>
             <label htmlFor={props.name}>{props.title}</label>
@@ -16,6 +20,7 @@ const Input = (props) => {
                 placeholder={props.placeholder}
                 style={props.style}
             />
+            {displayFieldError}
         </div>
     )
 };
