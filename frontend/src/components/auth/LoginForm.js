@@ -9,7 +9,7 @@ import { HOME } from '../../routes/routes';
 
 const formFields = {
     'username': {type: 'input', name: 'username', label: 'Username'},
-    'password': {type: 'input', name: 'password', label: 'Password'},
+    'password': {type: 'password', name: 'password', label: 'Password'}
 };
 
 class ConnectedLoginForm extends Component {
@@ -18,11 +18,20 @@ class ConnectedLoginForm extends Component {
 
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            errors: this.props.authErrors
         };
 
         this.handleInputOnChange = this.handleInputOnChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.authErrors !== this.props.authErrors) {
+            this.setState({
+                errors: this.props.authErrors
+            });
+        }
     }
 
     handleInputOnChange(e) {
@@ -41,7 +50,7 @@ class ConnectedLoginForm extends Component {
         this.setState({
             username: '',
             password: ''
-        })
+        });
     }
 
 
@@ -50,22 +59,39 @@ class ConnectedLoginForm extends Component {
             return <Redirect to={HOME} />
         }
 
+        const { errors } = this.state;
+
         const fieldsWithHandler = Object.entries(formFields).map(item => {
             const key = item[0];
             const value = item[1];
 
             if (key in this.state) {
+                let errorName = null
+                if (errors && key in errors) {
+                    // django passes dict: key: [string]
+                    errorName = errors[key].toString()
+                }
+
                 return {
                     ...value,
                     value: this.state[key],
-                    onChange: this.handleInputOnChange
+                    onChange: this.handleInputOnChange,
+                    fieldError: errorName
                 };
             }
         });
 
+
+        // handle when django passes 'non_field_errors' for authentication errors.
+        const displayNonFieldErrors = errors && errors['non_field_errors'] ?
+            <div className={'error'}>{errors['non_field_errors'][0]}</div>
+            : '';
+
+
         return (
             <form>
                 <FormFields fields={fieldsWithHandler} />
+                {displayNonFieldErrors}
                 <div>
                     <Button 
                         id={'submit-login'}
@@ -79,9 +105,10 @@ class ConnectedLoginForm extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const { isAuthenticated } = state.user;
+    const { isAuthenticated, authErrors } = state.user;
     return {
-        isAuthenticated
+        isAuthenticated,
+        authErrors
     }
 }
 

@@ -5,17 +5,18 @@ import { Input } from './';
 
 const FormFields = ({ fields, submitHandler=null }) => {
     const formFields = fields.map((field, index) => {
-        const { type, name, onChange, label, value, minlength } = field;
+        const { type, name, onChange, label, value, minlength, fieldError } = field;
 
         if (type === 'input') {
             return (
                 <Input 
-                  key={name} 
-                  type={type} 
-                  name={name} 
-                  title={label} 
-                  handleChange={onChange}
-                  value={value}
+                    key={name} 
+                    type={type} 
+                    name={name} 
+                    title={label} 
+                    handleChange={onChange}
+                    value={value}
+                    fieldError={fieldError}
                 />
             );
         }
@@ -23,16 +24,17 @@ const FormFields = ({ fields, submitHandler=null }) => {
         if (type === 'password') {
             return (
                 <Input
-                  required
-                  key={name} 
-                  type={type} 
-                  name={name} 
-                  title={label} 
-                  handleChange={onChange}
-                  minlength={minlength}
-                  value={value}
+                    required
+                    key={name} 
+                    type={type} 
+                    name={name} 
+                    title={label} 
+                    handleChange={onChange}
+                    minlength={minlength}
+                    value={value}
+                    fieldError={fieldError}
                 />
-            )
+            );
         }
     });
 
