@@ -96,17 +96,7 @@ const userRegister = (formData) => {
         headers
     })
     .then(response => {
-        const { status, statusText } = response;
-
-        if (status === 200) {
-            return response.json()
-        }
-
-        return {
-            response,
-            status,
-            error: statusText
-        }
+        return response.json();
     })
     .catch(error => {
         return error;

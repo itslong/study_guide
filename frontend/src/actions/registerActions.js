@@ -15,7 +15,7 @@ const registerUser = (formData) => {
                 return response;
             }
 
-            dispatch(userRegisterFail());
+            dispatch(userRegisterFail(response));
             return response;
         })
         .then(resp => {
@@ -47,9 +47,10 @@ const userRegisterSuccess = (payload) => {
     }
 };
 
-const userRegisterFail = () => {
+const userRegisterFail = (payload) => {
     return {
-        type: REGISTER_FAIL
+        type: REGISTER_FAIL,
+        payload
     };
 };
 
