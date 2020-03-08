@@ -20,11 +20,20 @@ class ConnectedRegistrationForm extends Component {
             email: '',
             username: '',
             password: '',
-            confirmPassword: ''
+            confirmPassword: '',
+            errors: this.props.registrationErrors
         };
 
         this.handleInput = this.handleInput.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.registrationErrors !== this.props.registrationErrors) {
+            this.setState({
+                errors: this.props.registrationErrors
+            });
+        }
     }
 
     handleInput(e) {
@@ -36,7 +45,7 @@ class ConnectedRegistrationForm extends Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        const { password, confirmPassword } = this.state;
+        const { password, confirmPassword, errors } = this.state;
 
         if (password === confirmPassword) {
             const { email, username, password} = this.state;
@@ -55,19 +64,37 @@ class ConnectedRegistrationForm extends Component {
                 password: '',
                 confirmPassword: '',
             });
+        } else {
+            const mismatchErrors = {
+                ...errors,
+                password: ['This field does not match.'],
+                confirmPassword: ['This field does not match.']
+            }
+            this.setState({
+                errors: {...mismatchErrors}
+            });
         }
     }
 
     render() {
+        const { errors } = this.state;
+
         const fieldsWithHandler = Object.entries(formFields).map(item => {
             const key = item[0];
             const value = item[1];
 
             if (key in this.state) {
+                let errorName = null;
+                if (errors && key in errors) {
+                    console.log('this.state.errors: ', errors)
+                    errorName = errors[key].toString();
+                }
+
                 return {
                     ...value,
                     value: this.state[key],
-                    onChange: this.handleInput
+                    onChange: this.handleInput,
+                    fieldError: errorName
                 };
             }
         });
@@ -87,10 +114,11 @@ class ConnectedRegistrationForm extends Component {
 
 
 const mapStateToProps = (state) => {
-    const { isAuthenticated } = state.user;
+    const { isAuthenticated, registrationErrors } = state.user;
     return {
-        isAuthenticated
-    }
+        isAuthenticated,
+        registrationErrors
+    };
 };
 
 const RegistrationForm = connect(mapStateToProps, { registerUser })(ConnectedRegistrationForm);
