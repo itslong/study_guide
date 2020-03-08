@@ -17,7 +17,8 @@ let initialState = {
     isAdmin: false,
     token: localStorage.getItem('token'),
     isLoading: false,
-    authErrors: null
+    authErrors: null,
+    registrationErrors: null
 };
 
 
@@ -53,6 +54,7 @@ const authReducers = (state=initialState, action) => {
                 isLoading: false,
                 token: action.payload,
                 authErrors: null,
+                registrationErrors: null
             };
         }
 
@@ -62,10 +64,18 @@ const authReducers = (state=initialState, action) => {
             return {
                 ...state,
                 authErrors: {...errors}
-            }
+            };
         }
 
-        case REGISTER_FAIL: 
+        case REGISTER_FAIL: {
+            // localStorage.removeItem('token');
+            const { errors } = action.payload;
+            return {
+                ...state,
+                registrationErrors: {...errors}
+            };
+        }
+
         case LOGOUT_SUCCESS: {
             localStorage.removeItem('token');
             return {
@@ -77,7 +87,7 @@ const authReducers = (state=initialState, action) => {
                 token: null,
                 isLoading: false,
                 authErrors: null
-            }
+            };
         }
 
         default:
