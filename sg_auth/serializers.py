@@ -7,14 +7,15 @@ from django.contrib.auth.models import User
 User._meta.get_field('email')._unique = True
 
 class RegisterUserSerializer(serializers.ModelSerializer):
+    confirm_password = serializers.CharField(allow_blank=False)
+
     class Meta:
         model = User
-        fields = ('id', 'email', 'username', 'password')
+        fields = ('id', 'email', 'username', 'password', 'confirm_password')
         extra_kwargs = {
           'password': {'write_only': True},
           'email': {'required': True, 'allow_blank': False}
         }
-
 
     def create(self, validated_data):
         user = User.objects.create_user(

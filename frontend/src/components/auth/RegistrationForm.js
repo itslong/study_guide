@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { FormFields, Button } from '../common';
-import { registerUser } from '../../actions';
+import { registerUser, userRegisterFail } from '../../actions';
 
 
 const formFields = {
     'email': {type: 'input', name: 'email', label: 'Email'},
     'username': {type: 'input', name: 'username', label: 'Username'},
     'password': {type: 'password', minlength: '8', name: 'password', label: 'Password'},
-    'confirmPassword': {type: 'password', minlength: '8', name: 'confirmPassword', label: 'Confirm Password'},
+    'confirm_password': {type: 'password', minlength: '8', name: 'confirm_password', label: 'Confirm Password'},
 };
 
 class ConnectedRegistrationForm extends Component {
@@ -20,7 +20,7 @@ class ConnectedRegistrationForm extends Component {
             email: '',
             username: '',
             password: '',
-            confirmPassword: '',
+            confirm_password: '',
             errors: this.props.registrationErrors
         };
 
@@ -45,35 +45,44 @@ class ConnectedRegistrationForm extends Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        const { password, confirmPassword, errors } = this.state;
+        const { password, confirm_password, email, username } = this.state;
 
-        if (password === confirmPassword) {
-            const { email, username, password} = this.state;
+        const formData = {
+            email,
+            username,
+            password,
+            confirm_password
+        };
 
-            const formData = {
-                email,
-                username,
-                password
-            };
+        const registerUser = this.props.registerUser(formData);
+        registerUser.then(response => {
+            const { errors: respErr } = response;
+            const { password, confirm_password, errors } = this.state;
 
-            this.props.registerUser(formData);
+            if (password !== confirm_password) {
+                const misMatchErr = ['These fields must match.'];
 
-            this.setState({
-                email: '',
-                username: '',
-                password: '',
-                confirmPassword: '',
-            });
-        } else {
-            const mismatchErrors = {
-                ...errors,
-                password: ['This field does not match.'],
-                confirmPassword: ['This field does not match.']
+                // state expects errors to be placed inside an 'errors' key.
+                const extraErrs = {
+                    errors: {
+                        ...respErr,
+                        password: misMatchErr,
+                        confirm_password: misMatchErr
+                    }
+                };
+
+                this.props.userRegisterFail(extraErrs)
             }
-            this.setState({
-                errors: {...mismatchErrors}
-            });
-        }
+
+            if (!errors) {
+                this.setState({
+                    email: '',
+                    username: '',
+                    password: '',
+                    confirm_password: '',
+                });
+            }
+        });
     }
 
     render() {
@@ -86,7 +95,6 @@ class ConnectedRegistrationForm extends Component {
             if (key in this.state) {
                 let errorName = null;
                 if (errors && key in errors) {
-                    console.log('this.state.errors: ', errors)
                     errorName = errors[key].toString();
                 }
 
@@ -121,6 +129,6 @@ const mapStateToProps = (state) => {
     };
 };
 
-const RegistrationForm = connect(mapStateToProps, { registerUser })(ConnectedRegistrationForm);
+const RegistrationForm = connect(mapStateToProps, { registerUser, userRegisterFail })(ConnectedRegistrationForm);
 
 export default RegistrationForm;

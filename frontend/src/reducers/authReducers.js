@@ -6,7 +6,7 @@ import {
     REGISTER_FAIL,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
-    LOGOUT_SUCCESS 
+    LOGOUT_SUCCESS,
 } from '../constants';
 
 
@@ -68,7 +68,7 @@ const authReducers = (state=initialState, action) => {
         }
 
         case REGISTER_FAIL: {
-            // localStorage.removeItem('token');
+            localStorage.removeItem('token');
             const { errors } = action.payload;
             return {
                 ...state,
