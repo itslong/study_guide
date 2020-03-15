@@ -7,7 +7,8 @@ const registerUser = (formData) => {
     return (dispatch) => {
 
         const regUser = userRegister(formData);
-        regUser.then(response => {
+        
+        return regUser.then(response => {
             const { token } = response;
 
             if (token) {
@@ -28,10 +29,7 @@ const registerUser = (formData) => {
                 };
             }
 
-            return {
-                error: 'Something went wrong',
-                response: resp
-            };
+            return resp;
         })
         .catch(error => {
             dispatch(userRegisterFail());
@@ -44,7 +42,7 @@ const userRegisterSuccess = (payload) => {
     return {
         type: REGISTER_SUCCESS,
         payload
-    }
+    };
 };
 
 const userRegisterFail = (payload) => {
@@ -55,5 +53,6 @@ const userRegisterFail = (payload) => {
 };
 
 export {
-    registerUser
+    registerUser,
+    userRegisterFail,
 };
