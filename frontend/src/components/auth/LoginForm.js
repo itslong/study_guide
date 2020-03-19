@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 
 import { FormFields, Button } from '../common';
 import { authenticateUser } from '../../actions';
-import { HOME } from '../../routes/routes';
+import { HOME, REGISTER } from '../../routes/routes';
 
 
 const formFields = {
@@ -24,6 +24,7 @@ class ConnectedLoginForm extends Component {
 
         this.handleInputOnChange = this.handleInputOnChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
+        this.redirectToRegister = this.redirectToRegister.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -51,6 +52,11 @@ class ConnectedLoginForm extends Component {
             username: '',
             password: ''
         });
+    }
+
+    redirectToRegister(e) {
+        e.preventDefault();
+        this.props.history.push(REGISTER);
     }
 
 
@@ -99,6 +105,13 @@ class ConnectedLoginForm extends Component {
                         action={this.handleLogin}
                     />
                 </div>
+                <div>
+                    <Button 
+                        id={'redirect-to-register'}
+                        title={'Register'}
+                        action={this.redirectToRegister}
+                    />
+                </div>
             </form>
         )
     }
@@ -114,4 +127,4 @@ const mapStateToProps = (state) => {
 
 const LoginForm = connect(mapStateToProps, { authenticateUser })(ConnectedLoginForm);
 
-export default LoginForm;
+export default withRouter(LoginForm);
