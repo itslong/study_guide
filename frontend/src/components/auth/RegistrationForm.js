@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { FormFields, Button } from '../common';
 import { registerUser, userRegisterFail } from '../../actions';
+import { LOGIN } from '../../routes/routes';
 
 
 const formFields = {
@@ -26,6 +28,7 @@ class ConnectedRegistrationForm extends Component {
 
         this.handleInput = this.handleInput.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.redirectToLogin = this.redirectToLogin.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -85,6 +88,11 @@ class ConnectedRegistrationForm extends Component {
         });
     }
 
+    redirectToLogin(e) {
+        e.preventDefault();
+        this.props.history.push(LOGIN);
+    }
+
     render() {
         const { errors } = this.state;
 
@@ -110,11 +118,20 @@ class ConnectedRegistrationForm extends Component {
         return (
             <div>
                 <FormFields fields={fieldsWithHandler} />
-                <Button 
-                    id={'submit'}
-                    title={'Register'}
-                    action={this.handleSubmit}
-                />
+                <div>
+                    <Button 
+                        id={'submit'}
+                        title={'Register'}
+                        action={this.handleSubmit}
+                    />
+                </div>
+                <div>
+                    <Button 
+                        id={'redirect-to-login'}
+                        title={'Login'}
+                        action={this.redirectToLogin}
+                    />
+                </div>
             </div>
         );
     }
@@ -131,4 +148,4 @@ const mapStateToProps = (state) => {
 
 const RegistrationForm = connect(mapStateToProps, { registerUser, userRegisterFail })(ConnectedRegistrationForm);
 
-export default RegistrationForm;
+export default withRouter(RegistrationForm);
