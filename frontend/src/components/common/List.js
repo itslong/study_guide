@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import ListCard from './ListCard';
+
 
 const mapStateToProps = (state, ownProps) => {
     const { listName } = ownProps;
@@ -13,13 +15,14 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const ConnectedList = (props) => {
+    /** 
+        State will have 'categories': {...}, 'topics': {...}, etc. Access items with listName:
+        listName: string. ex: 'categories', 'topics', etc.
+        categories: [ {category_name: ..., category_desc: ... }, {category_name: ..., category_desc: ... },... ]
+    **/
     const { listName, isLoading } = props;
     const listItems = props[listName];
-    /** 
-        listName: array of objects. Since the objects have dynamic names, transformation is required.
-        ex:
-        [ {category_name: ..., category_desc: ... }, {category_name: ..., category_desc: ... },... ]
-    **/
+
 
     const sortedListItems = listItems.length > 0 ? listItems.sort((a, b) => {
         return a.id - b.id
@@ -29,11 +32,9 @@ const ConnectedList = (props) => {
     if (!isLoading) {
         listValues = sortedListItems.length > 0 ? 
             sortedListItems.map((items, i) => {
-                return <li key={i}>{Object.entries(items).map(val => {
-                    return (
-                        val[1]
-                    );
-                })}</li>;
+                return (
+                    <li key={i}><ListCard listItem={items} /></li>
+                )
             }) : 'No categories for this user.';
     } 
 
