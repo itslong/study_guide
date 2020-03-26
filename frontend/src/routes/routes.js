@@ -17,7 +17,7 @@ const CATEGORY_DETAIL_PATH = BASE_PATH + CATEGORY + '/:id/';
 const CATEGORY_ADD_PATH = BASE_PATH + CATEGORY + '/add/';
 
 const USER = '/user';
-const USERS = '/users';
+const USERS = '/users/';
 const USERS_ALL_PATH = BASE_PATH + USERS;
 const USER_CATEGORIES_ALL_PATH = BASE_PATH + USER + '/:id' + CATEGORIES;
 
@@ -38,7 +38,7 @@ const REGISTER_PATH = AUTH_PATH + REGISTER;
 const LOGIN_PATH = AUTH_PATH + LOGIN;
 const LOGOUT_PATH = AUTH_PATH + LOGOUT;
 
-const LOAD_USER_PATH = BASE_PATH + AUTH + USER;
+const LOAD_USER_PATH = BASE_PATH + AUTH + USER + '/';
 
 
 export {
