@@ -1,7 +1,7 @@
 asgiref==3.2.3
 cffi==1.14.0
 cryptography==2.8
-Django==3.0.3
+Django==3.0.7
 django-rest-knox==4.1.0
 django-webpack-loader==0.6.0
 djangorestframework==3.11.0
